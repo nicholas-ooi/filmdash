@@ -21,17 +21,22 @@ angular.module('filmdash.controllers', [])
 
   })
 
-.controller('MovieCtrl', function($scope, $http) {
+.controller('MovieCtrl', function($scope, $http,$cordovaCalendar) {
 
   $scope.createEvent = function(item) {
+      var splitDate = item.release_date.split("-");
+      var year = splitDate[0];
+      var month = splitDate[1];
+      var day = splitDate[2];
        $cordovaCalendar.createEvent({
-           title: item.title,
+           title: item.Title,
            location: '',
-           notes: 'Bring sandwiches',
-           startDate: new Date(2015, 0, 15, 18, 30, 0, 0, 0),
-           endDate: new Date(2015, 1, 17, 12, 0, 0, 0, 0)
+           notes: item.desc, // 2016-02-09
+           startDate: new Date(year, month,  day, 18, 30, 0, 0, 0),
+           endDate: new Date(year, month, day, 17, 12, 0, 0, 0, 0)
        }).then(function (result) {
-           console.log("Event created successfully");
+         alert("Film successfully added into your calendar.");
+           console.log("Event created successfully : " + result);
        }, function (err) {
            console.error("There was an error: " + err);
        });
@@ -58,6 +63,8 @@ angular.module('filmdash.controllers', [])
     var items = data.data.results;
     for( var i = 0; i < 5 ; i++ ) {
       var movieName = items[i].original_title;
+      var overview =  items[i].overview;
+      var release_date =  items[i].release_date;
       $http({
            url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term="+ movieName,
            method: "GET",
@@ -75,6 +82,8 @@ angular.module('filmdash.controllers', [])
                 if(videoList[j].Format == "hls" || flag) {
                   console.log("URL: " + videoList[j].URL);
                   data[0].videoUrl = videoList[j].URL;
+                  data[0].desc = overview;
+                  data[0].release_date = release_date;
                   flag = false;
                 }
               }
