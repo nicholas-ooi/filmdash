@@ -2,7 +2,6 @@ angular.module('filmdash.controllers', [])
 
 .controller('LoginCtrl', function($state,$scope,$cordovaOauth,$ionicPopup,TwitterService) {
 
-
   $scope.data = {};
   var debug =false;
   $scope.login = function() {
@@ -23,34 +22,30 @@ angular.module('filmdash.controllers', [])
 
 .controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
 
+/** GET IVA Data **/
+var keyword = "warcraft";
+        $http({
+         url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term="+keyword,
+         method: "GET",
+         headers: {
+           'Content-type': 'application/json',
+           Authorization: 'Bearer ' + 'CRM2BrKREqDkoZUwYKhGG99QA2_d2vAi7flH9v8iaLVn5vpLpbag3vPfUbRetn-0w3qgSAEXP5fYOlf6i8tjuVk82zT5dqTsUn_1MTga6F-ithuTQGy0FQGhgkWNzPa20OyYsKFa_7Z8vb32zph7gWA5RcbENbnNbwzJiI4S8jUARgxKexj4Z28HCKDVONscjG606UgHpwWiIVWIMEP60Pkyf5_wB7VTyWgBjnJDudNNGhOtaod_YeIJhUv2o7eGeMuElTzbn7tvQZokNi4bpgEYeuQ',
+          'X-Api-Version': '1'
+         }
+      }).success(function(data, status, headers, config) {
 
-   $http({
-    url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term=warcraft",
-    method: "GET",
-    headers: {
-      'Content-type': 'application/json',
-      Authorization: 'Bearer ' + 'CRM2BrKREqDkoZUwYKhGG99QA2_d2vAi7flH9v8iaLVn5vpLpbag3vPfUbRetn-0w3qgSAEXP5fYOlf6i8tjuVk82zT5dqTsUn_1MTga6F-ithuTQGy0FQGhgkWNzPa20OyYsKFa_7Z8vb32zph7gWA5RcbENbnNbwzJiI4S8jUARgxKexj4Z28HCKDVONscjG606UgHpwWiIVWIMEP60Pkyf5_wB7VTyWgBjnJDudNNGhOtaod_YeIJhUv2o7eGeMuElTzbn7tvQZokNi4bpgEYeuQ',
-     'X-Api-Version': '1'
-    }
-}).success(function(data, status, headers, config) {
-
-  $ionicPopup.alert({
-     title: "Response Object -> " + data,
-     template: "Response Object -> " + JSON.stringify(data)
-   });
-
-
-}).error(function(data, status, headers, config) {
-  $ionicPopup.alert({
-     title: "Response Object -> " + status,
-     template: "Response Object -> " + JSON.stringify(data)
-   });
-});
+      //  $ionicPopup.alert({
+      //     title: "Response Object -> " + data,
+      //     template: "Response Object -> " + JSON.stringify(data)
+      //   });
 
 
-var data = TwitterService.getHomeTimeline();
-
-   $scope.home_timeline = data;
+      }).error(function(data, status, headers, config) {
+      //  $ionicPopup.alert({
+      //     title: "Response Object -> " + status,
+      //     template: "Response Object -> " + JSON.stringify(data)
+      //   });
+      });
 
     var vm = this;
 
@@ -91,9 +86,46 @@ var data = TwitterService.getHomeTimeline();
 
   })
 
-.controller('MovieCtrl', function($scope) {
+.controller('MovieCtrl', function($scope, $http) {
+
+  $scope.shouldShowDelete = false;
+   $scope.shouldShowReorder = false;
+   $scope.listCanSwipe = true;
+   console.log("Content GOnna load");
+  var movie_url = "https://api.themoviedb.org/3/discover/movie?api_key=c0f94b9f64140e4077a333d16906f2d0";
+  $http({
+    method: 'GET',
+    url: movie_url,
+  }).then(function successCallback(response) {
+    console.log("Successful Content: " + JSON.stringify(response));
+    loadContent(response);
+    }, function errorCallback(response) {
+
+  });
+
+  var loadContent = function(data) {
+    console.log("Loading Content");
+    $scope.popular_movies = [];
+    var items = data.data.results;
+    for( var i = 0; i < 5 ; i++ ) {
+      var movieName = items[i].original_title;
+      $http({
+           url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term="+ movieName,
+           method: "GET",
+           headers: {
+             'Content-type': 'application/json',
+             Authorization: 'Bearer ' + 'CRM2BrKREqDkoZUwYKhGG99QA2_d2vAi7flH9v8iaLVn5vpLpbag3vPfUbRetn-0w3qgSAEXP5fYOlf6i8tjuVk82zT5dqTsUn_1MTga6F-ithuTQGy0FQGhgkWNzPa20OyYsKFa_7Z8vb32zph7gWA5RcbENbnNbwzJiI4S8jUARgxKexj4Z28HCKDVONscjG606UgHpwWiIVWIMEP60Pkyf5_wB7VTyWgBjnJDudNNGhOtaod_YeIJhUv2o7eGeMuElTzbn7tvQZokNi4bpgEYeuQ',
+            'X-Api-Version': '1'
+           }
+        }).success(function(data, status, headers, config) {
+            console.log(JSON.stringify(data));
+        }).error(function(data, status, headers, config) {
+      });
+    }
+  }
 
 })
+
 .controller('SettingsCtrl', function($scope) {
   $scope.settings = {
     enableFacebook: true
