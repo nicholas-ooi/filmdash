@@ -53,19 +53,10 @@ angular.module('filmdash.services', [])
             return getStoredToken() !== null;
         },
         // 6
-        getHomeTimeline: function() {
-            var data;
-            var home_tl_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-            createTwitterSignature('GET', home_tl_url);
-            $http({
-              method: 'GET',
-              url: home_tl_url
-            }).then(function successCallback(response) {
-                data = response;
-              }, function errorCallback(response) {
-                data = "error"
-              });
-            return data;
+        getSignature: function(url) {
+            createTwitterSignature('GET', url);
+            return $http.defaults.headers.common.Authorization;
+
         },
         storeUserToken: storeUserToken,
         getStoredToken: getStoredToken,
