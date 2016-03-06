@@ -3,12 +3,10 @@ angular.module('filmdash.controllers', [])
 .controller('LoginCtrl', function($state,$scope,$cordovaOauth,$ionicPopup,TwitterService) {
 
   $scope.data = {};
-  var debug =false; // c
   $scope.login = function() {
 
-    if (debug ||  TwitterService.isAuthenticated()) {
-      $state.go('tab');
-
+    if (TwitterService.isAuthenticated()) {
+        $state.go('tab');
     } else {
         TwitterService.initialize().then(function(result) {
             if(result) {
@@ -20,6 +18,7 @@ angular.module('filmdash.controllers', [])
   })
 
 .controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
+
 /** GET IVA Data **/
 var keyword = "warcraft";
         $http({
@@ -34,37 +33,90 @@ var keyword = "warcraft";
 
       }).error(function(data, status, headers, config) {
 
-
       });
 
-      var timeline_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-      $http.defaults.headers.common.Authorization = TwitterService.getSignature(timeline_url);
-      $http.get(timeline_url).then(function successCallback(response) {
 
-          var tweets = response.data;
+      var videosArray = [];
 
-        });
+      $http({
+           url: "172.16.1.157:3000/getVideos",
+           method: "GET"
+           }).success(function(data, status, headers, config) {
+
+          videos = data;
+          console.log(data);
+          console.log(videos);
+          for(video in videos)
+          {
+              var videoTitle = video.title;
+              var videoId = video.id;
+              var videoStart = video.startsAt;
+              var videoEnd = video.endsAt;
+              var videoType = video.mediaType;
+
+              var eventType = "";
+              if(videoType == "Series")
+              {
+                eventType = "important";
+              }
+              else if(videoType == "Movie") {
+                eventType = "info";
+              }
+              videosArray.push( {
+                      id: videoId,
+                      title: videoTitle,
+                      type: 'important',
+                      startsAt: moment(videoStart),
+                      endsAt: moment(videoEnd),
+                      });
+
+              var timeline_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+              $http.defaults.headers.common.Authorization = TwitterService.getSignature(timeline_url);
+              $http.get(timeline_url).then(function successCallback(response) {
+
+                  tweets = response.data;
+                  for(tweet in tweets)
+                  {
+                      var tweetText = tweet.text;
+                      var re = new RegExp(videoTitle, 'g');
+                      if(tweetText.match(re))
+                      {
+
+                        videosArray.push( {
+                                id: videoId,
+                                title: videoTitle,
+                                type: 'important',
+                                startsAt: moment(videoStart),
+                                endsAt: moment(videoEnd),
+                                });
+                                break;
+                      }
+                  }
+                });
+          }
+
+        }).error(function(data, status, headers, config) {
+      });
 
     var vm = this;
 
     //These variables MUST be set as a minimum for the calendar to work
     vm.calendarView = 'month';
     vm.viewDate = new Date();
-    vm.events = [
-      {
-        title: 'Warcraft',
-        type: 'important',
-        startsAt: moment().toDate(),
-        endsAt: moment().toDate(),
-        draggable: true,
-        resizable: true
-      }
-    ];
+    console.log(videosArray);
+    vm.events = videosArray;
 
     vm.isCellOpen = false;
 
+    vm.cellModifier = function(cell) {
+      cell.cssClass = 'cellStyle';
+      cell.label = "testing";
+    };
+    vm.timespanClicked = function(event) {
+      alert(event.title);
+    };
+
     vm.eventClicked = function(event) {
-      alert("test");
     };
 
     vm.eventEdited = function(event) {
@@ -77,9 +129,6 @@ var keyword = "warcraft";
     };
 
     vm.toggle = function($event, field, event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      event[field] = !event[field];
     };
 
   })

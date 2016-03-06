@@ -1,7 +1,7 @@
-<ion-view view-title="Dashboard">
-  <ion-content class="padding">
+<ion-view view-title="What's Up!">
+  <ion-content overflow-scroll="true" padding="true" class="has-header">
 
-    <div ng-show="home_timeline.length == 0">Loading tweets...</div>
+    <!-- <div ng-show="home_timeline.length == 0">Loading tweets...</div>
 
     <div ng-repeat="entry in home_timeline" class="list card">
       <div class="item item-avatar">
@@ -15,7 +15,7 @@
         <img ng-if="entry.extended_entities" ng-src="{{ entry.extended_entities.media[0].media_url }}" style="width: 100%;"/>
       </div>
 
-    </div>
+    </div> -->
 
     <div ng-controller="DashCtrl as vm">
     <h2 class="text-center">{{ vm.calendarTitle }}</h2>
@@ -70,7 +70,8 @@
        day-view-start="06:00"
        day-view-end="22:00"
        day-view-split="30"
-       cell-modifier="vm.modifyCell(calendarCell)">
+       on-timespan-click="vm.timespanClicked(calendarEvent)"
+       cell-modifier="vm.cellModifier(calendarCell)">,
      </mwl-calendar>
 <!--
      <br><br><br>
