@@ -86,6 +86,7 @@ angular.module('filmdash.controllers', [])
               var flag = true;
               for(var j=0; j< videoList.length; j++) {
                 if(videoList[j].Format == "hls" || flag) {
+
                   console.log("URL: " + videoList[j].URL);
                   data[0].videoUrl = videoList[j].URL;
                   data[0].desc = overview;
