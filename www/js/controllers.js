@@ -70,9 +70,10 @@ angular.module('filmdash.controllers', [])
             //console.log(JSON.stringify(data));
             if(data[0].Title) {
               var videoList = data[0].Assets[0].Encodes;
+              var flag = true;
               for(var j=0; j< videoList.length; j++) {
-                var flag = true;
                 if(videoList[j].Format == "hls" || flag) {
+                  console.log("URL: " + videoList[j].URL);
                   data[0].videoUrl = videoList[j].URL;
                   flag = false;
                 }
