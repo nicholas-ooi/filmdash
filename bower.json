@@ -3,5 +3,13 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.2.4"
+  },
+  "dependencies": {
+    "angular-bootstrap-calendar": "^0.19.1",
+    "angular-moment": "^0.10.3",
+    "moment": "^2.11.2",
+    "ng-cordova-oauth": "^0.2.3",
+    "ng-twitter-api": "^0.1.5",
+    "ngCordova": "c3634c64090fa11c3e6bab3fcdc29712d3ecb965"
   }
 }

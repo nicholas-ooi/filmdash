@@ -1,7 +1,7 @@
 {
   "name": "filmdash",
   "version": "1.1.1",
-  "description": "filmdash: An Ionic project",
+  "description": "filmdash - Reminder for your movies and films if you forgot!",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
