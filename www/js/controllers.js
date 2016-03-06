@@ -21,25 +21,32 @@ angular.module('filmdash.controllers', [])
 
   })
 
-.controller('MovieCtrl', function($scope, $http,$cordovaCalendar) {
+.controller('MovieCtrl', function($scope, $http,$cordovaCalendar,$ionicPopup) {
 
-  $scope.createEvent = function(item) {
+  $scope.createEvent = function() {
+      item  = this.item;
       var splitDate = item.release_date.split("-");
       var year = splitDate[0];
       var month = splitDate[1];
       var day = splitDate[2];
+
        $cordovaCalendar.createEvent({
            title: item.Title,
-           location: '',
+           location: 'Movie',
            notes: item.desc, // 2016-02-09
            startDate: new Date(year, month,  day, 18, 30, 0, 0, 0),
            endDate: new Date(year, month, day, 17, 12, 0, 0, 0, 0)
        }).then(function (result) {
-         alert("Film successfully added into your calendar.");
+          $ionicPopup.alert({
+            title: 'Film Message',
+            template: 'Film successfully added into your calendar.'
+          });
+          console.log(item.release_date);
            console.log("Event created successfully : " + result);
        }, function (err) {
            console.error("There was an error: " + err);
        });
+
    }
 
 
@@ -51,7 +58,6 @@ angular.module('filmdash.controllers', [])
     method: 'GET',
     url: movie_url,
   }).then(function successCallback(response) {
-    //console.log("Successful Content: " + JSON.stringify(response));
     loadContent(response);
     }, function errorCallback(response) {
 
@@ -64,7 +70,7 @@ angular.module('filmdash.controllers', [])
     for( var i = 0; i < 5 ; i++ ) {
       var movieName = items[i].original_title;
       var overview =  items[i].overview;
-      var release_date =  items[i].release_date;
+      var release_date = items[i].release_date;
       $http({
            url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term="+ movieName,
            method: "GET",

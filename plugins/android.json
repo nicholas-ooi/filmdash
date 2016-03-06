@@ -7,10 +7,16 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-calendar": {
+            "PACKAGE_NAME": "com.ionicframework.filmdash385586"
+        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.filmdash385586"
         },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.filmdash385586"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.filmdash385586"
         },
         "cordova-plugin-splashscreen": {
@@ -23,9 +29,6 @@
             "PACKAGE_NAME": "com.ionicframework.filmdash385586"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.filmdash385586"
-        },
-        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.filmdash385586"
         }
     },
