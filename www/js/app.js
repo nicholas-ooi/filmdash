@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+
 angular.module('filmdash', ['angularMoment', 'ngSanitize', 'ngCordovaOauth','mwl.calendar','ionic', 'ngResource', 'filmdash.controllers', 'filmdash.services','ngTwitter'])
 
 .run(function($ionicPlatform) {
@@ -56,16 +57,16 @@ $urlRouterProvider.otherwise('/login');
   })
 
   // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
+  //
+  // .state('tab.dash', {
+  //   url: '/dash',
+  //   views: {
+  //     'tab-dash': {
+  //       templateUrl: 'templates/tab-dash.html',
+  //       controller: 'DashCtrl'
+  //     }
+  //   }
+  // })
 
   .state('tab.movie', {
       url: '/movie',
