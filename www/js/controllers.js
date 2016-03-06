@@ -44,13 +44,13 @@ var keyword = "warcraft";
       $http.get(timeline_url).then(function successCallback(response) {
 
           tweets = response.data;
-          foreach(tweet in tweets)
+          for(tweet in tweets)
           {
               tweet.text;
 
           }
         });
-        
+
       });
 
 
