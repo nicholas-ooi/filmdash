@@ -28,29 +28,33 @@
   background-size: cover;
 }
 
+.login.button{
+  opacity: 0.9;
+  height: 70px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
 .list-video {
   width: 100%;
   height: auto;
 }
 
-.list {
-  margin-top: 100px;
-}
-
-a.item-avatar {
-  padding:0;
-  border:none;
-  margin: 0;
+a.movie.item.item-avatar {
+  padding-left: 200px !important;
 }
 
 .list-item {
   display: block;
 }
 
-.video-wrapper {
-  width: 50%;
+/*.video-wrapper {
+  width: auto;
+  height:auto;
   display: inline-block;
-}
+}*/
 
 .videoPlayer {
   width: 100%;
@@ -58,10 +62,19 @@ a.item-avatar {
 
 .video-info {
   width: 50%;
-  display: inline-block;
 }
 
 .cellStyle {
   font-size: 12px;
   margin: 10px;
+}
+
+.movie.item{
+  font-size: 20px;
+}
+
+.movies.that.goes.fast{
+  font-size: 25px;
+  margin-left: 10px;
+  margin-right: 10px;
 }

@@ -2,22 +2,19 @@
 <ion-view title="FilmDash!">
   <ion-content overflow-scroll="true" padding="true" class="has-header">
 
-    <h3>Hottest Movies!</h3>
+    <h3 class="movies that goes fast">Movies that Goes Real Fast!</h3>
     <ion-list ng-controller="MovieCtrl"
           show-delete="shouldShowDelete"
           show-reorder="shouldShowReorder"
           can-swipe="listCanSwipe">
       <ion-item class="list-item" ng-repeat="item in popular_movies">
-        <div class="video-wrapper">
+        <div class="video-info">
+          <a class="movie item item-avatar" href="templates/movie-details.html"><b>{{item.Title}}</b></a>
           <video controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
             <source ng-src="{{item.videoUrl}}" type="video/mp4"/>
           </video>
-        </div>
-        <div class="video-info">
-          <a class="item item-avatar" href="templates/movie-details.html">{{item.Title}}</a>
-          <button class="button button-full button-positive" ng-click="createEvent(item)">RSVP NOW!</button>
-
-        </div>
+          <button class="button button-full button-balanced" ng-click="createEvent(item)" ><b>Add to Dash!</b></button>
+      </div>
     </ion-item>
   </ion-list>
 </ion-content>
