@@ -14,3 +14,36 @@
   transform: translateX(-50%) translateY(-50%);
   background-size: cover;
 }
+
+.list-video {
+  width: 100%;
+  height: auto;
+}
+
+.list {
+  margin-top: 100px;
+}
+
+a.item-avatar {
+  padding:0;
+  border:none;
+  margin: 0;
+}
+
+.list-item {
+  display: block;
+}
+
+.video-wrapper {
+  width: 50%;
+  display: inline-block;
+}
+
+.videoPlayer {
+  width: 100%;
+}
+
+.video-info {
+  width: 50%;
+  display: inline-block;
+}

@@ -2,21 +2,16 @@ angular.module('filmdash.controllers', [])
 
 .controller('LoginCtrl', function($state,$scope,$cordovaOauth,$ionicPopup,TwitterService) {
 
-<<<<<<< Updated upstream
-  $state.go('tab');
-
-=======
->>>>>>> Stashed changes
   $scope.data = {};
-  var debug =true; // c
+  var debug =false; // c
   $scope.login = function() {
 
     if (debug ||  TwitterService.isAuthenticated()) {
-
+      $state.go('tab');
 
     } else {
         TwitterService.initialize().then(function(result) {
-            if(result === true) {
+            if(result) {
                $state.go('tab');
             }
         });
@@ -25,13 +20,6 @@ angular.module('filmdash.controllers', [])
   })
 
 .controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
-
-<<<<<<< Updated upstream
-
-
-
-=======
->>>>>>> Stashed changes
 /** GET IVA Data **/
 var keyword = "warcraft";
         $http({
@@ -45,7 +33,7 @@ var keyword = "warcraft";
       }).success(function(data, status, headers, config) {
 
       }).error(function(data, status, headers, config) {
-<<<<<<< Updated upstream
+
 
       });
 
@@ -53,23 +41,10 @@ var keyword = "warcraft";
       $http.defaults.headers.common.Authorization = TwitterService.getSignature(timeline_url);
       $http.get(timeline_url).then(function successCallback(response) {
 
-          tweets = response.data;
-          foreach(tweet in tweets)
-          {
-              tweet.text;
-          }
-
+          var tweets = response.data;
 
         });
-        
-=======
-      //  $ionicPopup.alert({
-      //     title: "Response Object -> " + status,
-      //     template: "Response Object -> " + JSON.stringify(data)
-      //   });
-      });
 
->>>>>>> Stashed changes
     var vm = this;
 
     //These variables MUST be set as a minimum for the calendar to work
@@ -114,13 +89,12 @@ var keyword = "warcraft";
   $scope.shouldShowDelete = false;
    $scope.shouldShowReorder = false;
    $scope.listCanSwipe = true;
-   console.log("Content GOnna load");
   var movie_url = "https://api.themoviedb.org/3/discover/movie?api_key=c0f94b9f64140e4077a333d16906f2d0";
   $http({
     method: 'GET',
     url: movie_url,
   }).then(function successCallback(response) {
-    console.log("Successful Content: " + JSON.stringify(response));
+    //console.log("Successful Content: " + JSON.stringify(response));
     loadContent(response);
     }, function errorCallback(response) {
 
@@ -141,11 +115,36 @@ var keyword = "warcraft";
             'X-Api-Version': '1'
            }
         }).success(function(data, status, headers, config) {
-            console.log(JSON.stringify(data));
-            $scope.popular_movies.push(data)
+            //console.log(JSON.stringify(data));
+            if(data[0].Title) {
+              var videoList = data[0].Assets[0].Encodes;
+              for(var j=0; j< videoList.length; j++) {
+                var flag = true;
+                if(videoList[j].Format == "hls" || flag) {
+                  data[0].videoUrl = videoList[j].URL;
+                  flag = false;
+                }
+              }
+              if(data[0].videoUrl) {
+                $scope.popular_movies.push(data[0]);
+                //sendVideoServer(data[0]);
+                console.log(JSON.stringify(data[0].Title));
+              }
+            }
         }).error(function(data, status, headers, config) {
-      });
+        });
     }
+  }
+
+  var sendVideoServer = function(data) {
+    console.log(data.MediaType);
+    $http({
+      url: "http://172.16.1.157:3000/addVideo",
+      data: { "title" : data.Title , "status" : "0", "mediaType" : data.MediaType, "startsAt": "", "endsAt" : "", "videoId" : data.Assets[0].PublishedId },
+      method: "POST",
+    }).then(function successCallback(response) {
+      }, function errorCallback(response) {
+    });
   }
 
 })
