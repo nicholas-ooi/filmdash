@@ -5,7 +5,7 @@ angular.module('filmdash.services', [])
     var twitterKey = "STORAGE.TWITTER.KEY";
     var clientId = 'o7cL6opywzvhcT5cr1suU2HYn';
     var clientSecret = 'VQqb8v018t3LT3CMXSg8uClgPFgx6Y9RofDXkxpys3YM5qAkcB';
-    
+
     // 2
     function storeUserToken(data) {
         window.localStorage.setItem(twitterKey, JSON.stringify(data));
@@ -54,7 +54,7 @@ angular.module('filmdash.services', [])
         },
         // 6
         getHomeTimeline: function() {
-            var home_tl_url = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
+            var home_tl_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
             createTwitterSignature('GET', home_tl_url);
             return $resource(home_tl_url).query();
         },

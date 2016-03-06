@@ -4,17 +4,15 @@ angular.module('filmdash.controllers', [])
 
 
   $scope.data = {};
-  var debug =true;
+  var debug =false;
   $scope.login = function() {
 
     if (debug ||  TwitterService.isAuthenticated()) {
+
       $state.go('tab');
+
     } else {
         TwitterService.initialize().then(function(result) {
-          $ionicPopup.alert({
-             title: "Response Object -> " + JSON.stringify(result),
-             template: "Response Object -> " + JSON.stringify(result)
-           });
             if(result === true) {
                $state.go('tab');
             }
@@ -23,44 +21,44 @@ angular.module('filmdash.controllers', [])
   }
   })
 
+.controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
 
 
-  //   $cordovaOauth.twitter(clientKey, clientSecret).then(function(result) {
-  //
-  //     $ionicPopup.alert({
-  //    title: "Response Object -> " + JSON.stringify(result),
-  //    template: "Response Object -> " + JSON.stringify(result)
-  //  });
-  //  $state.go('tab');
-  //
-  //     $twitterApi.configure(clientId, clientSecret, result);
-  //
-  //   $twitterApi.getHomeTimeline({count: 5}).then(function(data) {
-  //
-  //           $ionicPopup.alert({
-  //          title: "Response Object -> " + data,
-  //          template: "Response Object -> " + data
-  //        });
-  //
-  //   },
-  //    function(error) {
-  //         $ionicPopup.alert({
-  //        title: "Response Object -> " + error,
-  //        template: "Response Object -> " + error
-  //      });
-  //    });
-  //
-  //
-  //   }, function(error) {
-  //     $ionicPopup.alert({
-  //    title: "Response Object -> " + error,
-  //    template: "Response Object -> " + error
-  //  });
-  //   });
-  //
-  // }
+/** GET IVA Data **/
+var keyword = "warcraft";
+        $http({
+         url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term="+keyword,
+         method: "GET",
+         headers: {
+           'Content-type': 'application/json',
+           Authorization: 'Bearer ' + 'CRM2BrKREqDkoZUwYKhGG99QA2_d2vAi7flH9v8iaLVn5vpLpbag3vPfUbRetn-0w3qgSAEXP5fYOlf6i8tjuVk82zT5dqTsUn_1MTga6F-ithuTQGy0FQGhgkWNzPa20OyYsKFa_7Z8vb32zph7gWA5RcbENbnNbwzJiI4S8jUARgxKexj4Z28HCKDVONscjG606UgHpwWiIVWIMEP60Pkyf5_wB7VTyWgBjnJDudNNGhOtaod_YeIJhUv2o7eGeMuElTzbn7tvQZokNi4bpgEYeuQ',
+          'X-Api-Version': '1'
+         }
+      }).success(function(data, status, headers, config) {
 
-.controller('DashCtrl', function(moment,$ionicPopup,$scope) {
+      //  $ionicPopup.alert({
+      //     title: "Response Object -> " + data,
+      //     template: "Response Object -> " + JSON.stringify(data)
+      //   });
+
+
+      }).error(function(data, status, headers, config) {
+      //  $ionicPopup.alert({
+      //     title: "Response Object -> " + status,
+      //     template: "Response Object -> " + JSON.stringify(data)
+      //   });
+      });
+
+
+
+var data = TwitterService.getHomeTimeline();
+
+$ionicPopup.alert({
+   title: "Response Object -> " + data,
+   template: "Response Object -> " + data
+ });
+
+   $scope.home_timeline = data;
 
     var vm = this;
 
