@@ -2,14 +2,14 @@ angular.module('filmdash.controllers', [])
 
 .controller('LoginCtrl', function($state,$scope,$cordovaOauth,$ionicPopup,TwitterService) {
 
+  $state.go('tab');
 
   $scope.data = {};
-  var debug =false;
+  var debug =true; // c
   $scope.login = function() {
 
     if (debug ||  TwitterService.isAuthenticated()) {
 
-      $state.go('tab');
 
     } else {
         TwitterService.initialize().then(function(result) {
@@ -24,6 +24,8 @@ angular.module('filmdash.controllers', [])
 .controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
 
 
+
+
 /** GET IVA Data **/
 var keyword = "warcraft";
         $http({
@@ -36,30 +38,23 @@ var keyword = "warcraft";
          }
       }).success(function(data, status, headers, config) {
 
-      //  $ionicPopup.alert({
-      //     title: "Response Object -> " + data,
-      //     template: "Response Object -> " + JSON.stringify(data)
-      //   });
-
-
       }).error(function(data, status, headers, config) {
-      //  $ionicPopup.alert({
-      //     title: "Response Object -> " + status,
-      //     template: "Response Object -> " + JSON.stringify(data)
-      //   });
+
       });
 
+      var timeline_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+      $http.defaults.headers.common.Authorization = TwitterService.getSignature(timeline_url);
+      $http.get(timeline_url).then(function successCallback(response) {
+
+          tweets = response.data;
+          foreach(tweet in tweets)
+          {
+              tweet.text;
+          }
 
 
-var data = TwitterService.getHomeTimeline();
-
-$ionicPopup.alert({
-   title: "Response Object -> " + data,
-   template: "Response Object -> " + data
- });
-
-   $scope.home_timeline = data;
-
+        });
+        
     var vm = this;
 
     //These variables MUST be set as a minimum for the calendar to work
