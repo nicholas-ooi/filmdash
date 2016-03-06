@@ -1,5 +1,17 @@
 /* Empty. Add your own CSS if you like */
 
+.login.pane{
+  background-image: url("../img/warcraft-movie-poster-durotan-toby-kebbel.jpg");
+  background-size: cover !important;
+}
+
+.filmdash_header {
+  margin-left: 9%;
+  margin-top: 18% !important;
+  color: white;
+  font-size: 65px;
+}
+
 .background-video {
   position: fixed;
   top: 50%;
@@ -14,6 +26,35 @@
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
   background-size: cover;
+}
+
+.list-video {
+  width: 100%;
+  height: auto;
+}
+
+a.item-avatar {
+  padding:0;
+  border:none;
+  margin: 0;
+}
+
+.list-item {
+  display: block;
+}
+
+.video-wrapper {
+  width: 50%;
+  display: inline-block;
+}
+
+.videoPlayer {
+  width: 100%;
+}
+
+.video-info {
+  width: 50%;
+  display: inline-block;
 }
 
 .cellStyle {

@@ -30,6 +30,7 @@ angular.module('filmdash', ['angularMoment', 'ngSanitize', 'ngCordovaOauth','ngC
     // Allow same origin resource loads.
     'self',
     // Allow loading from our assets domain.  Notice the difference between * and **.
+    'https://content.internetvideoarchive.com/**',
     'https://video.internetvideoarchive.net/**'
   ]);
   // Ionic uses AngularUI Router which uses the concept of states

@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('filmdash', ['angularMoment','ngCordovaOauth','mwl.calendar','ionic', 'ngResource', 'filmdash.controllers', 'filmdash.services','ngTwitter'])
+
+angular.module('filmdash', ['angularMoment', 'ngSanitize', 'ngCordovaOauth','ngCordova','ionic', 'ngResource', 'filmdash.controllers', 'filmdash.services','ngTwitter'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -14,7 +15,6 @@ angular.module('filmdash', ['angularMoment','ngCordovaOauth','mwl.calendar','ion
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
@@ -25,8 +25,14 @@ angular.module('filmdash', ['angularMoment','ngCordovaOauth','mwl.calendar','ion
 .run(function(amMoment) {
     amMoment.changeLocale('de');
 })
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
+  $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    // Allow loading from our assets domain.  Notice the difference between * and **.
+    'https://content.internetvideoarchive.com/**',
+    'https://video.internetvideoarchive.net/**'
+  ]);
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -52,16 +58,16 @@ $urlRouterProvider.otherwise('/login');
   })
 
   // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
+  //
+  // .state('tab.dash', {
+  //   url: '/dash',
+  //   views: {
+  //     'tab-dash': {
+  //       templateUrl: 'templates/tab-dash.html',
+  //       controller: 'DashCtrl'
+  //     }
+  //   }
+  // })
 
   .state('tab.movie', {
       url: '/movie',
@@ -82,6 +88,9 @@ $urlRouterProvider.otherwise('/login');
       }
     }
   });
-
-
-});
+})
+// .filter('trusted', ['$sce', function ($sce) {
+//     return function(url) {
+//         return $sce.trustAsResourceUrl(url);
+//     };
+// }]);

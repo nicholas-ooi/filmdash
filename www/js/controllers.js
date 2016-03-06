@@ -88,6 +88,7 @@ angular.module('filmdash.controllers', [])
                 }
               }
               if(data[0].videoUrl) {
+                data[0].thumbnailUrl = data[0].Assets[0].Images[0].URL;
                 $scope.popular_movies.push(data[0]);
                 //sendVideoServer(data[0]);
                 console.log(JSON.stringify(data[0].Title));

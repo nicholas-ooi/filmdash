@@ -10,7 +10,7 @@
       <ion-item class="list-item" ng-repeat="item in popular_movies">
         <div class="video-info">
           <a class="movie item item-avatar" href="templates/movie-details.html"><b>{{item.Title}}</b></a>
-          <video controls="controls" preload="metadata" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+          <video controls="controls" preload="metadata" poster={{item.thumbnailUrl}} webkit-playsinline="webkit-playsinline" class="videoPlayer">
             <source ng-src="{{item.videoUrl}}" type="video/mp4"/>
           </video>
           <button class="button button-full button-balanced" ng-click="createEvent(item)" ><b>Add to Dash!</b></button>
