@@ -17,122 +17,26 @@ angular.module('filmdash.controllers', [])
   }
   })
 
-.controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
-
-/** GET IVA Data **/
-var keyword = "warcraft";
-        $http({
-         url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term="+keyword,
-         method: "GET",
-         headers: {
-           'Content-type': 'application/json',
-           Authorization: 'Bearer ' + 'CRM2BrKREqDkoZUwYKhGG99QA2_d2vAi7flH9v8iaLVn5vpLpbag3vPfUbRetn-0w3qgSAEXP5fYOlf6i8tjuVk82zT5dqTsUn_1MTga6F-ithuTQGy0FQGhgkWNzPa20OyYsKFa_7Z8vb32zph7gWA5RcbENbnNbwzJiI4S8jUARgxKexj4Z28HCKDVONscjG606UgHpwWiIVWIMEP60Pkyf5_wB7VTyWgBjnJDudNNGhOtaod_YeIJhUv2o7eGeMuElTzbn7tvQZokNi4bpgEYeuQ',
-          'X-Api-Version': '1'
-         }
-      }).success(function(data, status, headers, config) {
-
-      }).error(function(data, status, headers, config) {
-
-      });
-
-      var videosArray = [];
-
-      $http({
-           url: "172.16.1.157:3000/getVideos",
-           method: "GET"
-           }).success(function(data, status, headers, config) {
-
-          videos = data;
-          console.log(data);
-          console.log(videos);
-          for(video in videos)
-          {
-              var videoTitle = video.title;
-              var videoId = video.id;
-              var videoStart = video.startsAt;
-              var videoEnd = video.endsAt;
-              var videoType = video.mediaType;
-
-              var eventType = "";
-              if(videoType == "Series")
-              {
-                eventType = "important";
-              }
-              else if(videoType == "Movie") {
-                eventType = "info";
-              }
-              videosArray.push( {
-                      id: videoId,
-                      title: videoTitle,
-                      type: 'important',
-                      startsAt: moment(videoStart),
-                      endsAt: moment(videoEnd),
-                      });
-
-              var timeline_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-              $http.defaults.headers.common.Authorization = TwitterService.getSignature(timeline_url);
-              $http.get(timeline_url).then(function successCallback(response) {
-
-                  tweets = response.data;
-                  for(tweet in tweets)
-                  {
-                      var tweetText = tweet.text;
-                      var re = new RegExp(videoTitle, 'g');
-                      if(tweetText.match(re))
-                      {
-
-                        videosArray.push( {
-                                id: videoId,
-                                title: videoTitle,
-                                type: 'important',
-                                startsAt: moment(videoStart),
-                                endsAt: moment(videoEnd),
-                                });
-                                break;
-                      }
-                  }
-                });
-          }
-
-        }).error(function(data, status, headers, config) {
-      });
-
-    var vm = this;
-
-    //These variables MUST be set as a minimum for the calendar to work
-    vm.calendarView = 'month';
-    vm.viewDate = new Date();
-    console.log(videosArray);
-    vm.events = videosArray;
-
-    vm.isCellOpen = false;
-
-    vm.cellModifier = function(cell) {
-      cell.cssClass = 'cellStyle';
-      cell.label = "testing";
-    };
-    vm.timespanClicked = function(event) {
-      alert(event.title);
-    };
-
-    vm.eventClicked = function(event) {
-    };
-
-    vm.eventEdited = function(event) {
-    };
-
-    vm.eventDeleted = function(event) {
-    };
-
-    vm.eventTimesChanged = function(event) {
-    };
-
-    vm.toggle = function($event, field, event) {
-    };
+.controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http,$cordovaCalendar) {
 
   })
 
 .controller('MovieCtrl', function($scope, $http) {
+
+  $scope.createEvent = function(item) {
+       $cordovaCalendar.createEvent({
+           title: item.title,
+           location: '',
+           notes: 'Bring sandwiches',
+           startDate: new Date(2015, 0, 15, 18, 30, 0, 0, 0),
+           endDate: new Date(2015, 1, 17, 12, 0, 0, 0, 0)
+       }).then(function (result) {
+           console.log("Event created successfully");
+       }, function (err) {
+           console.error("There was an error: " + err);
+       });
+   }
+
 
   $scope.shouldShowDelete = false;
    $scope.shouldShowReorder = false;

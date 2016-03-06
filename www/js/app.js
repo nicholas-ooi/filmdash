@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-angular.module('filmdash', ['angularMoment', 'ngSanitize', 'ngCordovaOauth','mwl.calendar','ionic', 'ngResource', 'filmdash.controllers', 'filmdash.services','ngTwitter'])
+angular.module('filmdash', ['angularMoment', 'ngSanitize', 'ngCordovaOauth','ngCordova','ionic', 'ngResource', 'filmdash.controllers', 'filmdash.services','ngTwitter'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
