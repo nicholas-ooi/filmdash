@@ -53,11 +53,12 @@ var keyword = "warcraft";
 
 var data = TwitterService.getHomeTimeline();
 
+$ionicPopup.alert({
+   title: "Response Object -> " + data,
+   template: "Response Object -> " + data
+ });
+
    $scope.home_timeline = data;
-   $ionicPopup.alert({
-      title: "Response Object -> " + JSON.stringify(data),
-      template: "Response Object -> " +  JSON.stringify(data)
-    });
 
     var vm = this;
 
