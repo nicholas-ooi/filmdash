@@ -1,46 +1,62 @@
 angular.module('filmdash.controllers', [])
 
-.controller('LoginCtrl', function($state,$scope,$cordovaOauth,$ionicPopup,$twitterApi) {
+.controller('LoginCtrl', function($state,$scope,$cordovaOauth,$ionicPopup,TwitterService) {
+
+
   $scope.data = {};
 
   $scope.login = function() {
-    var clientKey = "o7cL6opywzvhcT5cr1suU2HYn";
-    var clientSecret = "VQqb8v018t3LT3CMXSg8uClgPFgx6Y9RofDXkxpys3YM5qAkcB";
-    $cordovaOauth.twitter(clientKey, clientSecret).then(function(result) {
 
-      $ionicPopup.alert({
-     title: "Response Object -> " + JSON.stringify(result),
-     template: "Response Object -> " + JSON.stringify(result)
-   });
-
-      $twitterApi.configure(clientId, clientSecret, result);
-
-    $twitterApi.getHomeTimeline({count: 5}).then(function(data) {
-
-      $ionicPopup.alert({
-     title: "Response Object -> " + data,
-     template: "Response Object -> " + data
-   });
-
-    }, function(error) {
-      $ionicPopup.alert({
-     title: "Response Object -> " + data,
-     template: "Response Object -> " + data
-    });
-    $state.go('tab');
-
-
-
-
-    }, function(error) {
-      $ionicPopup.alert({
-     title: "Response Object -> " + error,
-     template: "Response Object -> " + error
-   });
-    });
-
+    if (TwitterService.isAuthenticated()) {
+      $state.go('tab');
+    } else {
+        TwitterService.initialize().then(function(result) {
+          $ionicPopup.alert({
+             title: "Response Object -> " + JSON.stringify(result),
+             template: "Response Object -> " + JSON.stringify(result)
+           });
+            if(result === true) {
+               $state.go('tab');
+            }
+        });
+    }
   }
 })
+
+  //   $cordovaOauth.twitter(clientKey, clientSecret).then(function(result) {
+  //
+  //     $ionicPopup.alert({
+  //    title: "Response Object -> " + JSON.stringify(result),
+  //    template: "Response Object -> " + JSON.stringify(result)
+  //  });
+  //  $state.go('tab');
+  //
+  //     $twitterApi.configure(clientId, clientSecret, result);
+  //
+  //   $twitterApi.getHomeTimeline({count: 5}).then(function(data) {
+  //
+  //           $ionicPopup.alert({
+  //          title: "Response Object -> " + data,
+  //          template: "Response Object -> " + data
+  //        });
+  //
+  //   },
+  //    function(error) {
+  //         $ionicPopup.alert({
+  //        title: "Response Object -> " + error,
+  //        template: "Response Object -> " + error
+  //      });
+  //    });
+  //
+  //
+  //   }, function(error) {
+  //     $ionicPopup.alert({
+  //    title: "Response Object -> " + error,
+  //    template: "Response Object -> " + error
+  //  });
+  //   });
+  //
+  // }
 
 .controller('DashCtrl', function(moment,$ionicPopup,$scope) {
 

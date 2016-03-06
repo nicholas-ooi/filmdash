@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('filmdash', ['angularMoment','ngCordovaOauth','mwl.calendar','ionic', 'filmdash.controllers', 'filmdash.services','ngTwitter'])
+angular.module('filmdash', ['angularMoment','ngCordovaOauth','mwl.calendar','ionic', 'ngResource', 'filmdash.controllers', 'filmdash.services','ngTwitter'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -39,14 +39,11 @@ $urlRouterProvider.otherwise('/login');
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-
     .state('callback', {
-          url: '/callback',
-          templateUrl: 'templates/login.html',
-          controller: 'LoginCtrl'
-      })
-
-
+    url: '/callback',
+    abstract: false,
+    templateUrl: 'templates/callback.html'
+  })
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
