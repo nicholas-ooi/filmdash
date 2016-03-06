@@ -1,19 +1,18 @@
 /* Empty. Add your own CSS if you like */
-<<<<<<< Updated upstream
-.scroll-content {
-    background-image: url("../img/warcraft-movie-poster-durotan-toby-kebbel.jpg");
-      -webkit-background-size: cover !important;
-      -moz-background-size: cover !important;
-      background-size: cover !important;
-  }
 
-  .filmdash_header{
-    margin-left: 9%;
-    margin-top: 18% !important;
-    color: white;
-    font-size: 65px;
-  }
-=======
+.scroll-content {
+  background-image: url("../img/warcraft-movie-poster-durotan-toby-kebbel.jpg");
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  background-size: cover !important;
+}
+
+.filmdash_header {
+  margin-left: 9%;
+  margin-top: 18% !important;
+  color: white;
+  font-size: 65px;
+}
 
 .background-video {
   position: fixed;
@@ -35,4 +34,3 @@
   font-size: 12px;
   margin: 10px;
 }
->>>>>>> Stashed changes
