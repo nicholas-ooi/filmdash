@@ -42,11 +42,7 @@
   height: auto;
 }
 
-<<<<<<< Updated upstream
 
-a.movie.item.item-avatar {
-  padding-left: 200px !important;
-=======
 a.item {
     padding: 0;
     color: inherit;
@@ -55,7 +51,7 @@ a.item {
     display: block;
     border: none;
     text-align: center;
->>>>>>> Stashed changes
+
 }
 
 .list-item {
