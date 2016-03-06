@@ -5,10 +5,9 @@ angular.module('filmdash.controllers', [])
 
 
   $scope.data = {};
-  var debug =true; // c
   $scope.login = function() {
 
-    if (debug ||  TwitterService.isAuthenticated()) {
+    if (TwitterService.isAuthenticated()) {
         $state.go('tab');
     } else {
         TwitterService.initialize().then(function(result) {
@@ -46,12 +45,11 @@ var keyword = "warcraft";
           tweets = response.data;
           for(tweet in tweets)
           {
-              tweet.text;
+              var text = tweet.text;
 
           }
         });
 
-      });
 
 
     var vm = this;
@@ -72,8 +70,11 @@ var keyword = "warcraft";
 
     vm.isCellOpen = false;
 
-    vm.eventClicked = function(event) {
+    vm.timespanClicked = function(date) {
       alert("test");
+    };
+
+    vm.eventClicked = function(event) {
     };
 
     vm.eventEdited = function(event) {
@@ -86,9 +87,9 @@ var keyword = "warcraft";
     };
 
     vm.toggle = function($event, field, event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      event[field] = !event[field];
+      // $event.preventDefault();
+      // $event.stopPropagation();
+      // event[field] = !event[field];
     };
 
   })
