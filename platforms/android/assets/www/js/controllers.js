@@ -24,31 +24,39 @@ angular.module('filmdash.controllers', [])
 .controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
 
 
-   $http({
-    url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term=warcraft",
-    method: "GET",
-    headers: {
-      'Content-type': 'application/json',
-      Authorization: 'Bearer ' + 'CRM2BrKREqDkoZUwYKhGG99QA2_d2vAi7flH9v8iaLVn5vpLpbag3vPfUbRetn-0w3qgSAEXP5fYOlf6i8tjuVk82zT5dqTsUn_1MTga6F-ithuTQGy0FQGhgkWNzPa20OyYsKFa_7Z8vb32zph7gWA5RcbENbnNbwzJiI4S8jUARgxKexj4Z28HCKDVONscjG606UgHpwWiIVWIMEP60Pkyf5_wB7VTyWgBjnJDudNNGhOtaod_YeIJhUv2o7eGeMuElTzbn7tvQZokNi4bpgEYeuQ',
-     'X-Api-Version': '1'
-    }
-}).success(function(data, status, headers, config) {
+/** GET IVA Data **/
+var keyword = "warcraft";
+        $http({
+         url: "https://ee.internetvideoarchive.net/api/expresspro/actions/search/?appid=2c0bfc22&term="+keyword,
+         method: "GET",
+         headers: {
+           'Content-type': 'application/json',
+           Authorization: 'Bearer ' + 'CRM2BrKREqDkoZUwYKhGG99QA2_d2vAi7flH9v8iaLVn5vpLpbag3vPfUbRetn-0w3qgSAEXP5fYOlf6i8tjuVk82zT5dqTsUn_1MTga6F-ithuTQGy0FQGhgkWNzPa20OyYsKFa_7Z8vb32zph7gWA5RcbENbnNbwzJiI4S8jUARgxKexj4Z28HCKDVONscjG606UgHpwWiIVWIMEP60Pkyf5_wB7VTyWgBjnJDudNNGhOtaod_YeIJhUv2o7eGeMuElTzbn7tvQZokNi4bpgEYeuQ',
+          'X-Api-Version': '1'
+         }
+      }).success(function(data, status, headers, config) {
 
-  $ionicPopup.alert({
-     title: "Response Object -> " + data,
-     template: "Response Object -> " + JSON.stringify(data)
-   });
+      //  $ionicPopup.alert({
+      //     title: "Response Object -> " + data,
+      //     template: "Response Object -> " + JSON.stringify(data)
+      //   });
 
 
-}).error(function(data, status, headers, config) {
-  $ionicPopup.alert({
-     title: "Response Object -> " + status,
-     template: "Response Object -> " + JSON.stringify(data)
-   });
-});
+      }).error(function(data, status, headers, config) {
+      //  $ionicPopup.alert({
+      //     title: "Response Object -> " + status,
+      //     template: "Response Object -> " + JSON.stringify(data)
+      //   });
+      });
+
 
 
 var data = TwitterService.getHomeTimeline();
+
+$ionicPopup.alert({
+   title: "Response Object -> " + data,
+   template: "Response Object -> " + data
+ });
 
    $scope.home_timeline = data;
 
