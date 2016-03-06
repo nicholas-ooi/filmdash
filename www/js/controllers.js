@@ -2,18 +2,14 @@ angular.module('filmdash.controllers', [])
 
 .controller('LoginCtrl', function($state,$scope,$cordovaOauth,$ionicPopup,TwitterService) {
 
-<<<<<<< Updated upstream
-  $state.go('tab');
 
-=======
->>>>>>> Stashed changes
+
   $scope.data = {};
   var debug =true; // c
   $scope.login = function() {
 
     if (debug ||  TwitterService.isAuthenticated()) {
-
-
+        $state.go('tab');
     } else {
         TwitterService.initialize().then(function(result) {
             if(result === true) {
@@ -26,12 +22,8 @@ angular.module('filmdash.controllers', [])
 
 .controller('DashCtrl', function(moment,$ionicPopup,$scope,TwitterService,$http) {
 
-<<<<<<< Updated upstream
 
 
-
-=======
->>>>>>> Stashed changes
 /** GET IVA Data **/
 var keyword = "warcraft";
         $http({
@@ -45,8 +37,6 @@ var keyword = "warcraft";
       }).success(function(data, status, headers, config) {
 
       }).error(function(data, status, headers, config) {
-<<<<<<< Updated upstream
-
       });
 
       var timeline_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
@@ -57,19 +47,13 @@ var keyword = "warcraft";
           foreach(tweet in tweets)
           {
               tweet.text;
+
           }
-
-
         });
         
-=======
-      //  $ionicPopup.alert({
-      //     title: "Response Object -> " + status,
-      //     template: "Response Object -> " + JSON.stringify(data)
-      //   });
       });
 
->>>>>>> Stashed changes
+
     var vm = this;
 
     //These variables MUST be set as a minimum for the calendar to work
